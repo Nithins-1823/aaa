@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Tracker</title>
+</head>
+<body>
+    <h1>Hello</h1>
+
+    <script>
+      window.onload = function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const locationData = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+
+            fetch('/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(locationData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Location sent successfully!');
+            })
+            .catch((error) => {
+                alert('Error sending location!');
+            });
+        }, function(error) {
+            // If permission is denied or geolocation fails, reload the page
+            if (error.code === error.PERMISSION_DENIED) {
+                alert("Location permission denied. Please allow access.");
+                window.location.reload();  // Reload the page to ask for permission again
+            } else {
+                console.log('Geolocation error: ' + error.message);
+            }
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+};
+    </script>
+</body>
+</html>
